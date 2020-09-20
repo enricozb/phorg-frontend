@@ -17,8 +17,6 @@ const connector = connect(mapState, mapDispatch);
 type Props = ConnectedProps<typeof connector>;
 
 function App(props: Props) {
-  console.log("test", (window as any).interop);
-
   if (!props.library) {
     return <LibraryPicker></LibraryPicker>;
   }

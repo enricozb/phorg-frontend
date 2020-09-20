@@ -1,9 +1,13 @@
-import { spawn } from "child_process";
+import { remote } from "electron";
 
 declare global {
   interface Window {
-    interop: any;
+    electron: any;
   }
 }
 
-window.interop = { spawn };
+window.electron = {
+  openPathDialog() {
+    return remote.dialog.showOpenDialog({ properties: ["openDirectory"] });
+  },
+};
