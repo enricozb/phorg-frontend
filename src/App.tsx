@@ -1,8 +1,8 @@
 import React from "react";
 
 import { connect, ConnectedProps } from "react-redux";
-import { State } from "./types";
 
+import { State } from "./types";
 import { LibraryPicker } from "./components/modals/LibraryPicker";
 import { Topbar } from "./components/Topbar";
 import { Grid } from "./components/Grid";
@@ -17,6 +17,8 @@ const connector = connect(mapState, mapDispatch);
 type Props = ConnectedProps<typeof connector>;
 
 function App(props: Props) {
+  console.log("test", (window as any).interop);
+
   if (!props.library) {
     return <LibraryPicker></LibraryPicker>;
   }

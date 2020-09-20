@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import "../../css/Modal.css";
-import close from "../img/close.svg";
 
 interface Props {
   title: string;

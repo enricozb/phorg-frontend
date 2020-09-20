@@ -1,5 +1,4 @@
-import { Action } from "./actions";
-import { Album, Library } from "../types";
+import { Action, Album, Library } from "../types";
 
 const initialState = {
   library: null as Library | null,

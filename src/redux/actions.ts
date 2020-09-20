@@ -1,8 +1,8 @@
-export const BLANK_ACTION = "blank_action";
+import { Action, SET_LIBRARY, Library } from "../types";
 
-interface BlankAction {
-  type: typeof BLANK_ACTION;
-  payload: string;
+export function setLibrary(library: Library): Action {
+  return {
+    type: SET_LIBRARY,
+    library
+  }
 }
-
-export type Action = BlankAction;
