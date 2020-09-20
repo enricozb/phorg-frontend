@@ -1,4 +1,4 @@
-import { remote } from "electron";
+import { remote, OpenDialogReturnValue } from "electron";
 
 declare global {
   interface Window {
@@ -7,7 +7,7 @@ declare global {
 }
 
 window.electron = {
-  openPathDialog() {
+  openPathDialog(): Promise<OpenDialogReturnValue> {
     return remote.dialog.showOpenDialog({ properties: ["openDirectory"] });
   },
 };

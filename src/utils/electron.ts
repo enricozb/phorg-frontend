@@ -1,11 +1,13 @@
+import { OpenDialogReturnValue } from "electron";
+
 declare global {
   interface Window {
     electron: {
-      openPathDialog: () => string
+      openPathDialog: () => Promise<OpenDialogReturnValue>
     };
   }
 }
 
-export function openPathDialog(): string {
+export function openPathDialog() {
   return window.electron.openPathDialog();
 }

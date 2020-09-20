@@ -1,12 +1,13 @@
 import React from "react";
 
-import useSWR from "swr";
+import axios from "axios";
 import { connect, ConnectedProps } from "react-redux";
+import useSWR, { mutate } from "swr";
 
 import { Library } from "../../types";
 import { setLibrary } from "../../redux/actions";
 import { Modal } from "./Modal";
-import { fetcher } from "../../api/swr";
+import { fetcher } from "../../api/requests";
 import { openPathDialog } from "../../utils/electron";
 
 const mapDispatch = {
@@ -17,6 +18,17 @@ const connector = connect(null, mapDispatch);
 type Props = ConnectedProps<typeof connector>;
 
 function LibraryPickerImpl(props: Props) {
+  const createLibrary = async () => {
+    const path = await openPathDialog();
+    if (path.canceled) {
+      return;
+    }
+
+    await axios.post("/api/libraries", {});
+
+    console.log(path.filePaths[0]);
+  };
+
   const { data: libraries, error } = useSWR<Library[]>(
     "/api/libraries",
     fetcher
@@ -45,7 +57,7 @@ function LibraryPickerImpl(props: Props) {
           <p>Name</p>
           <input type="text" />
           <p>Path</p>
-          <button onClick={openPathDialog}>Library Path</button>
+          <button onClick={createLibrary}>Pick a Library Path</button>
         </div>
       </Modal>
     );
