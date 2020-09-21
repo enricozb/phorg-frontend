@@ -1,15 +1,13 @@
 import React from "react";
 
-import { Album, Library } from "../types";
-
 import "../css/Topbar.css";
 
 interface Props {
-  library: Library;
-  album: Album;
-};
+  libraryName: string;
+  albumName?: string;
+}
 
 export function Topbar(props: Props) {
-  const topbarText = props.album ? props.album.name : "Pics";
+  const topbarText = `${props.libraryName} - ${props.albumName ?? "All Media"}`;
   return <div className="topbar">{topbarText}</div>;
 }

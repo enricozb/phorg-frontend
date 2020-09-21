@@ -30,10 +30,14 @@ function LibraryPickerImpl(props: Props) {
     const library: Library = {
       id: uuidv4(),
       name,
-      path: path.filePaths[0],
+      albums: [],
+      media: [],
     };
 
-    await axios.post("/api/libraries", { library });
+    await axios.post("/api/libraries", {
+      path: path.filePaths[0],
+      library,
+    });
     props.setLibrary(library);
   };
 
@@ -80,7 +84,9 @@ function LibraryPickerImpl(props: Props) {
     <Modal title="Select a Library" onRequestHide={null}>
       {libraries.map((library, i) => (
         <li key={i}>
-          <button onClick={() => props.setLibrary(library)}>{library.name}</button>
+          <button onClick={() => props.setLibrary(library)}>
+            {library.name}
+          </button>
         </li>
       ))}
     </Modal>

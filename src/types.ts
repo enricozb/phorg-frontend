@@ -3,7 +3,8 @@
 export interface Library {
   id: string;
   name: string;
-  path: string;
+  albums: Album[];
+  media: Media[];
 }
 
 export interface Album {
