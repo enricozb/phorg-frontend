@@ -10,6 +10,7 @@ import { setLibrary } from "../../redux/actions";
 import { Modal } from "./Modal";
 import { fetcher } from "../../api/requests";
 import { openPathDialog } from "../../utils/electron";
+import { ReactComponent as PlusSVG } from "../../img/plus.svg";
 
 const mapDispatch = {
   setLibrary,
@@ -20,6 +21,7 @@ type Props = ConnectedProps<typeof connector>;
 
 function LibraryPickerImpl(props: Props) {
   const [name, setName] = useState("");
+  const [newLibrary, setNewLibrary] = useState(false);
 
   const createLibrary = async () => {
     const path = await openPathDialog();
@@ -41,30 +43,9 @@ function LibraryPickerImpl(props: Props) {
     props.setLibrary(library);
   };
 
-  const { data: libraries, error } = useSWR<Library[]>(
-    "/api/libraries",
-    fetcher
-  );
-
-  if (error) {
+  const pickLibraryComponent = (title: string) => {
     return (
-      <Modal title="Error Loading Libraries" onRequestHide={null}>
-        {error.message}
-      </Modal>
-    );
-  }
-
-  if (!libraries) {
-    return (
-      <Modal title="Pick a Library" onRequestHide={null}>
-        loading...
-      </Modal>
-    );
-  }
-
-  if (libraries.length === 0) {
-    return (
-      <Modal title="Create your first Library" onRequestHide={null}>
+      <Modal title={title} onRequestHide={() => setNewLibrary(false)}>
         <div>
           <p>Name</p>
           <input
@@ -78,10 +59,37 @@ function LibraryPickerImpl(props: Props) {
         </div>
       </Modal>
     );
+  };
+
+  const addLibraryButton = (
+    <button className="icon" onClick={() => setNewLibrary(true)}>
+      <PlusSVG />
+    </button>
+  );
+
+  const { data: libraries, error } = useSWR<Library[]>(
+    "/api/libraries",
+    fetcher
+  );
+
+  if (error) {
+    return <Modal title="Error Loading Libraries">{error.message}</Modal>;
+  }
+
+  if (!libraries) {
+    return <Modal title="Pick a Library">loading...</Modal>;
+  }
+
+  if (libraries.length === 0) {
+    return pickLibraryComponent("Create your First Library");
+  }
+
+  if (newLibrary) {
+    return pickLibraryComponent("Create a New Library");
   }
 
   return (
-    <Modal title="Select a Library" onRequestHide={null}>
+    <Modal title="Select a Library" rightButton={addLibraryButton}>
       {libraries.map((library, i) => (
         <li key={i}>
           <button onClick={() => props.setLibrary(library)}>
