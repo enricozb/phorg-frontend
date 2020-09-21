@@ -1,4 +1,5 @@
 import { Action, Album, Library } from "../types";
+import { SET_LIBRARY } from "../types";
 
 const initialState = {
   library: null as Library | null,
@@ -6,5 +7,9 @@ const initialState = {
 };
 
 export const reducer = (state = initialState, action: Action) => {
+  switch (action.type) {
+    case SET_LIBRARY:
+      return {...state, library: action.library};
+  }
   return state;
 };

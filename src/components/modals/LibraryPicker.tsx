@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, ChangeEvent } from "react";
 
 import axios from "axios";
 import { connect, ConnectedProps } from "react-redux";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
+import { v4 as uuidv4 } from "uuid";
 
 import { Library } from "../../types";
 import { setLibrary } from "../../redux/actions";
@@ -18,15 +19,22 @@ const connector = connect(null, mapDispatch);
 type Props = ConnectedProps<typeof connector>;
 
 function LibraryPickerImpl(props: Props) {
+  const [name, setName] = useState("");
+
   const createLibrary = async () => {
     const path = await openPathDialog();
-    if (path.canceled) {
+    if (path.canceled || name.length === 0) {
       return;
     }
 
-    await axios.post("/api/libraries", {});
+    const library: Library = {
+      id: uuidv4(),
+      name,
+      path: path.filePaths[0],
+    };
 
-    console.log(path.filePaths[0]);
+    await axios.post("/api/libraries", { library });
+    props.setLibrary(library);
   };
 
   const { data: libraries, error } = useSWR<Library[]>(
@@ -55,7 +63,12 @@ function LibraryPickerImpl(props: Props) {
       <Modal title="Create your first Library" onRequestHide={null}>
         <div>
           <p>Name</p>
-          <input type="text" />
+          <input
+            type="text"
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setName(e.target.value);
+            }}
+          />
           <p>Path</p>
           <button onClick={createLibrary}>Pick a Library Path</button>
         </div>
@@ -63,12 +76,13 @@ function LibraryPickerImpl(props: Props) {
     );
   }
 
-  if (libraries.length === 1) {
-  }
-
   return (
-    <Modal title="Pick a Library" onRequestHide={null}>
-      Modal text
+    <Modal title="Select a Library" onRequestHide={null}>
+      {libraries.map((library, i) => (
+        <li key={i}>
+          <button onClick={() => props.setLibrary(library)}>{library.name}</button>
+        </li>
+      ))}
     </Modal>
   );
 }

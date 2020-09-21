@@ -15,7 +15,7 @@ function createWindow() {
     },
   });
 
-  mainWindow.setMenu(null);
+  // mainWindow.setMenu(null);
   mainWindow.webContents.openDevTools();
   mainWindow.loadURL(process.env.ELECTRON_START_URL!);
   mainWindow.on("closed", function () {
