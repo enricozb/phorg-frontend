@@ -9,5 +9,15 @@ interface Props {
 
 export function Topbar(props: Props) {
   const topbarText = `${props.libraryName} - ${props.albumName ?? "All Media"}`;
-  return <div className="topbar">{topbarText}</div>;
+  return (
+    <div className="topbar">
+      <button className="click-blue" style={{ visibility: "hidden" }}>
+        <p>Import Media</p>
+      </button>
+      <div>{topbarText}</div>
+      <button className="click-blue">
+        <p>Import Media</p>
+      </button>
+    </div>
+  );
 }

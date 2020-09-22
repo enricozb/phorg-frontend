@@ -24,12 +24,12 @@
 
   background: white;
 
-  border: 1px solid #444;
+  border: var(--border-style);
   border-radius: 7px;
 
-  -moz-box-shadow: 0 5px 10px 0px #777;
-  -webkit-box-shadow: 0 5px 10px 0px #777;
-  box-shadow: 0 5px 10px 0px #777;
+  -moz-box-shadow: var(--shadow);
+  -webkit-box-shadow: var(--shadow);
+  box-shadow: var(--shadow);
 }
 
 .modal .title {
@@ -70,7 +70,7 @@
   }
 }
 
-button.icon {
+button.click-blue {
   height: 100%;
 
   display: grid;
@@ -87,18 +87,35 @@ button.icon {
   cursor: pointer;
 }
 
-button.icon:hover {
-  border: 1px solid #0a84ff;
+.click-blue {
+  color: var(--link-blue);
+  fill: var(--link-blue);
+}
+
+.click-blue * {
+  padding: 2px;
+  border: 1px solid white;
+}
+
+.click-blue p {
+  border-radius: 7px;
+}
+
+.click-blue svg {
+  width: 24px;
+  height: 24px;
+
   border-radius: 20px;
 }
 
-button.icon:focus {
-  background-color: #0a84ff33;
+button.click-blue:focus {
   outline: none;
 }
 
-.icon svg {
-  width: 17px;
-  height: 17px;
-  fill: #0a84ff;
+.click-blue *:hover {
+  border: 1px solid var(--link-blue);
+}
+
+button.click-blue:focus * {
+  background: var(--link-light-blue);
 }

@@ -62,7 +62,7 @@ function LibraryPickerImpl(props: Props) {
   };
 
   const addLibraryButton = (
-    <button className="icon" onClick={() => setNewLibrary(true)}>
+    <button className="click-blue" onClick={() => setNewLibrary(true)}>
       <PlusSVG />
     </button>
   );

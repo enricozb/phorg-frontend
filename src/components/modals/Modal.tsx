@@ -52,7 +52,7 @@ export class Modal extends React.Component<Props> {
 
   render = () => {
     const closeModalButton = (
-      <button className="icon" onClick={this.requestHide}>
+      <button className="click-blue" onClick={this.requestHide}>
         <TimesSVG />
       </button>
     );

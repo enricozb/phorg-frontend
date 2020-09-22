@@ -2,8 +2,9 @@
   height: 60px;
   width: 100%;
 
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 
-  border-bottom: 0.5px solid #ccc;
+  border-bottom: var(--border-style);
 }
