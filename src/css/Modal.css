@@ -76,12 +76,15 @@ button.click-blue {
   display: grid;
   place-items: center;
 
+  font-size: inherit;
+
   margin: 0 10px 0 10px;
-  padding: 3px;
+  padding: 0;
+
+  box-sizing: border-box;
 
   border: none;
   background: none;
-  border: 1px solid white;
   border-radius: 20px;
 
   cursor: pointer;

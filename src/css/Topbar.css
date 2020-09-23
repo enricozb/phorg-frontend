@@ -8,3 +8,7 @@
 
   border-bottom: var(--border-style);
 }
+
+.error {
+  color: red;
+}

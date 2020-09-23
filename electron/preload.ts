@@ -11,3 +11,11 @@ window.electron = {
     return remote.dialog.showOpenDialog({ properties: ["openDirectory"] });
   },
 };
+
+window.electron = {
+  multiselectPathsDialog(): Promise<OpenDialogReturnValue> {
+    return remote.dialog.showOpenDialog({
+      properties: ["openFile", "openDirectory", "multiSelections"],
+    });
+  },
+};
