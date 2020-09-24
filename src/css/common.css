@@ -1,6 +1,9 @@
 :root {
-  --border-style: 1px solid #444;
+  --border-style: 1px solid #ccc;
   --shadow: 0 5px 10px 0px #777;
+
   --link-blue: #0a84ff;
   --link-light-blue: #0a84ff22;
+
+  --light-grey: #F8F9FA;
 }
