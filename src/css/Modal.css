@@ -91,8 +91,8 @@ button.click-blue {
 }
 
 .click-blue {
-  color: var(--link-blue);
-  fill: var(--link-blue);
+  color: var(--blue);
+  fill: var(--blue);
 }
 
 .click-blue * {
@@ -116,9 +116,9 @@ button.click-blue:focus {
 }
 
 .click-blue *:hover {
-  border: 1px solid var(--link-blue);
+  border: 1px solid var(--blue);
 }
 
 button.click-blue:focus * {
-  background: var(--link-light-blue);
+  background: var(--light-blue);
 }

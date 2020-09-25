@@ -1,0 +1,25 @@
+progress[value]::-webkit-progress-value {
+  width: 50%;
+  -webkit-transition: width .3s ease;
+  -o-transition: width .3s ease;
+  transition: width .3s ease;
+}
+
+
+.progress-bar {
+  display: inline-block;
+  height: 0.5em;
+  width: 10em;
+
+  border-radius: 7px;
+  border: var(--border-style);
+  background: var(--light-grey);
+}
+
+.progress-value {
+  height: 100%;
+  border-radius: 7px;
+  background: var(--blue);
+
+  transition: width .3s ease;
+}

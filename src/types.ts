@@ -18,9 +18,10 @@ export interface Media {
 
 export interface ImportStatus {
   ongoing: boolean;
-  precentage: number;
+  percentage: number;
   message: string;
   errors: string[];
+  media: Media[];
 }
 
 // redux
