@@ -1,7 +1,7 @@
 import React from "react";
 
 import "../css/Topbar.css";
-import { ImportButton } from "./ImportInfo";
+import { ImportButton } from "./Import";
 
 interface Props {
   libraryName: string;

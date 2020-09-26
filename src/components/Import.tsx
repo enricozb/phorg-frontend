@@ -10,7 +10,7 @@ import {
   onImportStatusUpdate,
 } from "../utils/electron";
 import { ReactComponent as WarningSVG } from "../img/warning.svg";
-import "../css/ImportInfo.css";
+import "../css/Import.css";
 
 const mapState = ({ library }: State) => ({
   library,
