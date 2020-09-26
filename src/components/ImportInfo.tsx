@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 
+import { connect, ConnectedProps } from "react-redux";
 import axios from "axios";
 import useSWR from "swr";
 
 import { Modal } from "./modals/Modal";
 import { fetcher } from "../api/requests";
-import { ImportStatus } from "../types";
+import { ImportStatus, State } from "../types";
 import { multiselectPathsDialog } from "../utils/electron";
 import { ReactComponent as WarningSVG } from "../img/warning.svg";
 import "../css/ImportInfo.css";
 
-export function ImportButton() {
+const mapState = ({ library }: State) => ({
+  library,
+});
+const mapDispatch = {};
+
+const connector = connect(mapState, mapDispatch);
+type Props = ConnectedProps<typeof connector>;
+
+function ImportButtonImpl(props: Props) {
   const [showingErrors, setShowingErrors] = useState(false);
   const { data: status, error } = useSWR<ImportStatus>(
     "/api/import/status",
@@ -41,14 +50,12 @@ export function ImportButton() {
         <div className={`progress ${hasErrors ? "error" : ""}`}>
           {hasErrors && (
             <div className="warning" onClick={() => setShowingErrors(true)}>
-              <WarningSVG  />
+              <WarningSVG />
               <span>Import Errors</span>
             </div>
           )}
           {!hasErrors && status.message && (
-            <div className="status">
-              {status.message}
-            </div>
+            <div className="status">{status.message}</div>
           )}
           <div className={`bar ${hasErrors ? "error" : ""}`}>
             <div
@@ -67,7 +74,10 @@ export function ImportButton() {
       onClick={async () => {
         const { canceled, filePaths } = await multiselectPathsDialog();
         if (!canceled) {
-          await axios.post("/api/import", { paths: filePaths });
+          await axios.post("/api/import", {
+            libraryId: props.library!.id,
+            paths: filePaths,
+          });
         }
       }}
     >
@@ -75,6 +85,8 @@ export function ImportButton() {
     </button>
   );
 }
+
+export const ImportButton = connector(ImportButtonImpl);
 
 interface ErrorModalProps {
   errors: string[];

@@ -111,6 +111,7 @@ button.click-blue {
 .click-blue * {
   padding: 2px;
   border: 1px solid white;
+  transition: var(--background-transition-hover-leave);
 }
 
 .click-blue p {
