@@ -18,6 +18,7 @@ export interface Media {
 
 export interface ImportStatus {
   ongoing: boolean;
+  complete: boolean;
   percentage: number;
   message: string;
   errors: string[];

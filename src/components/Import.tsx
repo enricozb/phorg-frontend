@@ -24,6 +24,7 @@ function ImportButtonImpl(props: Props) {
   const [showingErrors, setShowingErrors] = useState(false);
   const [importStatus, setImportStatus] = useState({
     ongoing: false,
+    complete: false,
     percentage: 0,
     message: "",
     errors: [],
@@ -34,7 +35,7 @@ function ImportButtonImpl(props: Props) {
     onImportStatusUpdate("/tmp/phorg_import.sock", (status: ImportStatus) => {
 
       // delay the final message by a second so the progress bar shows completion
-      if (!status.ongoing) {
+      if (status.complete) {
         setImportStatus({...status, ongoing: true});
         setTimeout(() => setImportStatus(status), 1000);
       } else {
