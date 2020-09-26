@@ -32,8 +32,14 @@ function ImportButtonImpl(props: Props) {
 
   useEffect(() => {
     onImportStatusUpdate("/tmp/phorg_import.sock", (status: ImportStatus) => {
-      console.log('updating status', status);
-      setImportStatus(status);
+
+      // delay the final message by a second so the progress bar shows completion
+      if (!status.ongoing) {
+        setImportStatus({...status, ongoing: true});
+        setTimeout(() => setImportStatus(status), 1000);
+      } else {
+        setImportStatus(status);
+      }
     });
   }, []);
 
