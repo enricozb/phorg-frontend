@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { connect, ConnectedProps } from "react-redux";
 import axios from "axios";
-import useSWR from "swr";
 
 import { Modal } from "./modals/Modal";
-import { fetcher } from "../api/requests";
 import { ImportStatus, State } from "../types";
-import { multiselectPathsDialog } from "../utils/electron";
+import {
+  multiselectPathsDialog,
+  onImportStatusUpdate,
+} from "../utils/electron";
 import { ReactComponent as WarningSVG } from "../img/warning.svg";
 import "../css/ImportInfo.css";
 
@@ -21,29 +22,29 @@ type Props = ConnectedProps<typeof connector>;
 
 function ImportButtonImpl(props: Props) {
   const [showingErrors, setShowingErrors] = useState(false);
-  const { data: status, error } = useSWR<ImportStatus>(
-    "/api/import/status",
-    fetcher,
+  const [importStatus, setImportStatus] = useState({
+    ongoing: false,
+    percentage: 0,
+    message: "",
+    errors: [],
+    media: [],
+  } as ImportStatus);
 
-    { refreshInterval: 1000 }
-  );
+  useEffect(() => {
+    onImportStatusUpdate("/tmp/phorg_import.sock", (status: ImportStatus) => {
+      console.log('updating status', status);
+      setImportStatus(status);
+    });
+  }, []);
 
-  if (error) {
-    return <div className="error">{error.message}</div>;
-  }
+  const hasErrors = importStatus.errors.length > 0;
 
-  if (!status) {
-    return <div />;
-  }
-
-  const hasErrors = status.errors.length > 0;
-
-  if (hasErrors || status.ongoing) {
+  if (hasErrors || importStatus.ongoing) {
     return (
       <>
         {showingErrors && (
           <ErrorModal
-            errors={status.errors}
+            errors={importStatus.errors}
             onRequestHide={() => setShowingErrors(false)}
           />
         )}
@@ -54,13 +55,13 @@ function ImportButtonImpl(props: Props) {
               <span>Import Errors</span>
             </div>
           )}
-          {!hasErrors && status.message && (
-            <div className="status">{status.message}</div>
+          {!hasErrors && importStatus.message && (
+            <div className="message">{importStatus.message}</div>
           )}
           <div className={`bar ${hasErrors ? "error" : ""}`}>
             <div
               className="value"
-              style={{ width: `${status.percentage * 100}%` }}
+              style={{ width: `${importStatus.percentage * 100}%` }}
             ></div>
           </div>
         </div>

@@ -9,7 +9,7 @@ function createWindow() {
     height: 600,
     titleBarStyle: "hidden",
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, "interop.js"),
       nodeIntegration: false,
 
       // took me a whole morning to find this stupid setting
