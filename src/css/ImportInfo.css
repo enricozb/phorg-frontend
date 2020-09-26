@@ -5,21 +5,66 @@ progress[value]::-webkit-progress-value {
   transition: width .3s ease;
 }
 
+.progress {
+  display: flex;
 
-.progress-bar {
-  display: inline-block;
+  height: 100%;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.progress.error {
+  flex-direction: row;
+}
+
+.progress .bar.error {
+  width: 7em;
+}
+
+.progress .message {
+  margin: 0;
+  padding: 0;
+
+  color: var(--dark-grey);
+  font-size: 8pt;
+}
+
+.progress .bar {
   height: 0.5em;
   width: 10em;
+
+  display: inline-block;
 
   border-radius: 7px;
   border: var(--border-style);
   background: var(--light-grey);
+
+  transition: width .3s ease;
 }
 
-.progress-value {
+.progress .bar .value {
   height: 100%;
   border-radius: 7px;
   background: var(--blue);
 
   transition: width .3s ease;
+}
+
+.warning {
+  height: 23px;
+  width: 23px;
+
+  border-radius: 15px;
+
+  fill: var(--red);
+
+  cursor: pointer;
+  transition: background 0.4s ease;
+}
+
+.warning:hover {
+  background: var(--light-red);
+  transition: background 0.2s ease;
 }

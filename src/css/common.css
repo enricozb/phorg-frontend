@@ -2,8 +2,12 @@
   --border-style: 1px solid #ccc;
   --shadow: 0 5px 10px 0px #777;
 
+  --red: #ec4219;
+  --light-red: #ec421922;
+
   --blue: #0a84ff;
   --light-blue: #0a84ff22;
 
-  --light-grey: #F8F9FA;
+  --light-grey: #f8f9fa;
+  --dark-grey: #28292a;
 }

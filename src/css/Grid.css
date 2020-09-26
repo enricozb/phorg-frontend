@@ -12,5 +12,6 @@
 }
 
 .empty.grid {
+  color: var(--dark-grey);
   align-items: center;
 }
