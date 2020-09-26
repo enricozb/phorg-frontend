@@ -33,7 +33,7 @@ function LibraryPickerImpl(props: Props) {
       id: uuidv4(),
       name,
       albums: [],
-      media: [],
+      media: {},
     };
 
     await axios.post("/api/libraries", {

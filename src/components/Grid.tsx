@@ -4,11 +4,11 @@ import { Media } from "../types";
 import "../css/Grid.css";
 
 interface Props {
-  media: Media[];
+  media: Record<string, Media>;
 }
 
 export function Grid(props: Props) {
-  if (props.media.length === 0) {
+  if (Object.keys(props.media).length === 0) {
     return (
       <div className="grid empty">
         There doesn't seem to be anything here...

@@ -28,7 +28,7 @@ function ImportButtonImpl(props: Props) {
     percentage: 0,
     message: "",
     errors: [],
-    media: [],
+    media: {},
   } as ImportStatus);
 
   useEffect(() => {
