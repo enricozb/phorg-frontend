@@ -65,9 +65,9 @@ export class Modal extends React.Component<Props> {
     return ReactDOM.createPortal(
       <>
         <div className="title">
-          <div style={{ visibility: closeButtonVisibile }}>{closeModalButton}</div>
+          <div className="left" style={{ visibility: closeButtonVisibile }}>{closeModalButton}</div>
           <div>{this.props.title}</div>
-          <div style={{ visibility: rightVisible }}>{rightButton}</div>
+          <div className="right" style={{ visibility: rightVisible }}>{rightButton}</div>
         </div>
         <div className="content">{this.props.children}</div>
       </>,

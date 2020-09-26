@@ -10,4 +10,7 @@
 
   --light-grey: #f8f9fa;
   --dark-grey: #28292a;
+
+  --background-transition-hover-enter: background 0.2s ease;
+  --background-transition-hover-leave: background 0.4s ease;
 }

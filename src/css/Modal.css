@@ -51,6 +51,16 @@
   background: white;
 }
 
+.modal .title .left {
+  text-align: left;
+  flex: 1;
+}
+
+.modal .title .right {
+  text-align: right;
+  flex: 1;
+}
+
 .modal .content {
   width: 100%;
 
@@ -112,6 +122,7 @@ button.click-blue {
   height: 24px;
 
   border-radius: 20px;
+  transition: var(--background-transition-hover-leave);
 }
 
 button.click-blue:focus {
@@ -119,9 +130,10 @@ button.click-blue:focus {
 }
 
 .click-blue *:hover {
-  border: 1px solid var(--blue);
+  background: var(--light-blue);
+  transition: var(--background-transition-hover-enter);
 }
 
 button.click-blue:focus * {
-  background: var(--light-blue);
+  border: 1px solid var(--blue);
 }

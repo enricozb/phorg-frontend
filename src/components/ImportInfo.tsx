@@ -27,7 +27,7 @@ export function ImportButton() {
     return <div />;
   }
 
-  const hasErrors = status.errors.length > 1;
+  const hasErrors = status.errors.length > 0;
 
   if (hasErrors || status.ongoing) {
     return (
@@ -40,13 +40,15 @@ export function ImportButton() {
         )}
         <div className={`progress ${hasErrors ? "error" : ""}`}>
           {hasErrors && (
-            <WarningSVG
-              className="warning"
-              onClick={() => setShowingErrors(true)}
-            />
+            <div className="warning" onClick={() => setShowingErrors(true)}>
+              <WarningSVG  />
+              <span>Import Errors</span>
+            </div>
           )}
           {!hasErrors && status.message && (
-            <p className="message">{status.message}</p>
+            <div className="status">
+              {status.message}
+            </div>
           )}
           <div className={`bar ${hasErrors ? "error" : ""}`}>
             <div

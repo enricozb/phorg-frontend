@@ -1,34 +1,26 @@
-progress[value]::-webkit-progress-value {
-  width: 50%;
-  -webkit-transition: width .3s ease;
-  -o-transition: width .3s ease;
-  transition: width .3s ease;
-}
-
 .progress {
-  display: flex;
-
   height: 100%;
+  width: 100%;
+
+  display: flex;
 
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
 }
 
-.progress.error {
-  flex-direction: row;
-}
-
-.progress .bar.error {
-  width: 7em;
+.progress.error .bar {
+  margin: 0 30px;
 }
 
 .progress .message {
+  height: 23px;
+
   margin: 0;
-  padding: 0;
+  padding-top: 10px;
 
   color: var(--dark-grey);
-  font-size: 8pt;
+  font-size: 10pt;
 }
 
 .progress .bar {
@@ -40,8 +32,6 @@ progress[value]::-webkit-progress-value {
   border-radius: 7px;
   border: var(--border-style);
   background: var(--light-grey);
-
-  transition: width .3s ease;
 }
 
 .progress .bar .value {
@@ -52,19 +42,49 @@ progress[value]::-webkit-progress-value {
   transition: width .3s ease;
 }
 
-.warning {
-  height: 23px;
-  width: 23px;
+.status {
+  height: 24px;
 
-  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
+  padding: 0 5px;
+
+  font-size: 10pt;
+  color: var(--dark-grey);
   fill: var(--red);
+  border-radius: 7px;
+}
 
-  cursor: pointer;
-  transition: background 0.4s ease;
+.warning {
+  height: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 5px;
+
+  font-size: 10pt;
+  color: var(--red);
+  fill: var(--red);
+  border-radius: 7px;
+
+  transition: var(--background-transition-hover-leave);
+}
+
+.warning svg {
+  height: 20px;
+  width: 20px;
+
+  margin-right: 10px;
+
+  fill: inherit;
 }
 
 .warning:hover {
+  cursor: pointer;
   background: var(--light-red);
-  transition: background 0.2s ease;
+  transition: var(--background-transition-hover-enter);
 }
