@@ -1,9 +1,11 @@
 import React from "react";
 
-import { LibraryMedia } from "../types";
+import { Thumbnail } from "./Thumbnail";
+import { guid, LibraryMedia } from "../types";
 import "../css/Grid.css";
 
 interface Props {
+  libraryId: guid;
   media: LibraryMedia;
 }
 
@@ -16,5 +18,11 @@ export function Grid(props: Props) {
     );
   }
 
-  return <div className="grid">Grid</div>;
+  return (
+    <div className="grid">
+      {Object.entries(props.media.items).map(([id, mediaEntry], i) => (
+        <Thumbnail key={i} libraryId={props.libraryId} mediaId={id} />
+      ))}
+    </div>
+  );
 }

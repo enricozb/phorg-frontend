@@ -1,8 +1,8 @@
 // REST types
 
-type guid = string;
-type burst_id = string;
-type content_id = string;
+export type guid = string;
+export type burst_id = string;
+export type content_id = string;
 
 export interface LibraryMedia {
   items: Record<guid, Media>;
