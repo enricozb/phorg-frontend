@@ -32,17 +32,25 @@ function ImportButtonImpl(props: Props) {
   } as ImportStatus);
 
   useEffect(() => {
-    onImportStatusUpdate("/tmp/phorg_import.sock", (status: ImportStatus) => {
+    onImportStatusUpdate(
+      "/tmp/phorg_import.sock",
+      async (status: ImportStatus) => {
+        if (status.complete) {
+          setImportStatus({ ...status, ongoing: true });
 
-      // delay the final message by a second so the progress bar shows completion
-      if (status.complete) {
-        setImportStatus({...status, ongoing: true});
-        setTimeout(() => setImportStatus(status), 1000);
-      } else {
-        setImportStatus(status);
+          // delay the final message by a second so the progress bar shows completion
+          setTimeout(() => setImportStatus(status), 1000);
+
+          await axios.post("/api/media", {
+            libraryId: props.library!.id,
+            media: status.media,
+          });
+        } else {
+          setImportStatus(status);
+        }
       }
-    });
-  }, []);
+    );
+  }, [props.library]);
 
   const hasErrors = importStatus.errors.length > 0;
 

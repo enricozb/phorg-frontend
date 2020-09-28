@@ -1,14 +1,14 @@
 import React from "react";
 
-import { Media } from "../types";
+import { LibraryMedia } from "../types";
 import "../css/Grid.css";
 
 interface Props {
-  media: Record<string, Media>;
+  media: LibraryMedia;
 }
 
 export function Grid(props: Props) {
-  if (Object.keys(props.media).length === 0) {
+  if (Object.keys(props.media.items).length === 0) {
     return (
       <div className="grid empty">
         There doesn't seem to be anything here...
