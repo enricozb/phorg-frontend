@@ -10,7 +10,7 @@ interface Props {
 }
 
 export function Topbar(props: Props) {
-  const topbarText = `${props.library.id} - ${props.albumName ?? "All Media"}`;
+  const topbarText = `${props.library.name} - ${props.albumName ?? "All Media"}`;
 
   return (
     <div className="topbar">
