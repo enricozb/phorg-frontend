@@ -17,6 +17,8 @@ export interface Library {
   media: LibraryMedia;
 }
 
+export type LibraryPreview = Pick<Library, "id" | "name">;
+
 export interface Album {
   id: string;
   name: string;
@@ -45,11 +47,11 @@ export interface State {
   album: Album | null;
 }
 
-export const SET_LIBRARY = "SET_LIBRARY";
+export const SET_LIBRARY_PREVIEW = "SET_LIBRARY_PREVIEW";
 
-interface SetLibraryAction {
-  type: typeof SET_LIBRARY;
-  library: Library;
+interface SetLibraryPreviewAction {
+  type: typeof SET_LIBRARY_PREVIEW;
+  library: LibraryPreview;
 }
 
-export type Action = SetLibraryAction;
+export type Action = SetLibraryPreviewAction;

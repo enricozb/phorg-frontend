@@ -1,8 +1,8 @@
-import { Action, SET_LIBRARY, Library } from "../types";
+import { Action, SET_LIBRARY_PREVIEW, LibraryPreview } from "../types";
 
-export function setLibrary(library: Library): Action {
+export function setLibraryPreview(library: LibraryPreview): Action {
   return {
-    type: SET_LIBRARY,
-    library
-  }
+    type: SET_LIBRARY_PREVIEW,
+    library,
+  };
 }

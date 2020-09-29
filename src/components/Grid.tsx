@@ -1,16 +1,31 @@
 import React from "react";
 
+import useSWR from "swr";
+
+import { fetcher } from "../api/requests";
+import { guid, Library } from "../types";
 import { Thumbnail } from "./Thumbnail";
-import { guid, LibraryMedia } from "../types";
 import "../css/Grid.css";
 
 interface Props {
   libraryId: guid;
-  media: LibraryMedia;
 }
 
 export function Grid(props: Props) {
-  if (Object.keys(props.media.items).length === 0) {
+  const { data: library, error } = useSWR<Library>(
+    `/api/libraries/${props.libraryId}`,
+    fetcher
+  );
+
+  if (error) {
+    return <div className="grid empty">Error loading media</div>;
+  }
+
+  if (!library) {
+    return <div className="grid empty">Loading...</div>;
+  }
+
+  if (Object.keys(library.media.items).length === 0) {
     return (
       <div className="grid empty">
         There doesn't seem to be anything here...
@@ -20,8 +35,8 @@ export function Grid(props: Props) {
 
   return (
     <div className="grid">
-      {Object.entries(props.media.items).map(([id, mediaEntry], i) => (
-        <Thumbnail key={i} libraryId={props.libraryId} mediaId={id} />
+      {Object.entries(library.media.items).map(([id, mediaEntry], i) => (
+        <Thumbnail key={i} libraryId={library.id} mediaId={id} />
       ))}
     </div>
   );

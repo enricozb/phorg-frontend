@@ -1,20 +1,21 @@
 import React from "react";
 
-import "../css/Topbar.css";
+import { LibraryPreview } from "../types";
 import { ImportButton } from "./Import";
+import "../css/Topbar.css";
 
 interface Props {
-  libraryName: string;
+  library: LibraryPreview;
   albumName?: string;
 }
 
 export function Topbar(props: Props) {
-  const topbarText = `${props.libraryName} - ${props.albumName ?? "All Media"}`;
+  const topbarText = `${props.library.id} - ${props.albumName ?? "All Media"}`;
 
   return (
     <div className="topbar">
       <div className="title">{topbarText}</div>
-      <ImportButton/>
+      <ImportButton libraryId={props.library.id} />
     </div>
   );
 }

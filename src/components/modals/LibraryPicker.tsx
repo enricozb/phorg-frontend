@@ -5,15 +5,15 @@ import { connect, ConnectedProps } from "react-redux";
 import useSWR from "swr";
 import { v4 as uuidv4 } from "uuid";
 
-import { Library } from "../../types";
-import { setLibrary } from "../../redux/actions";
+import { LibraryPreview } from "../../types";
+import { setLibraryPreview } from "../../redux/actions";
 import { Modal } from "./Modal";
 import { fetcher } from "../../api/requests";
 import { openPathDialog } from "../../utils/electron";
 import { ReactComponent as PlusSVG } from "../../img/plus.svg";
 
 const mapDispatch = {
-  setLibrary,
+  setLibraryPreview,
 };
 
 const connector = connect(null, mapDispatch);
@@ -29,25 +29,20 @@ function LibraryPickerImpl(props: Props) {
       return;
     }
 
-    const library: Library = {
+    const library: LibraryPreview = {
       id: uuidv4(),
       name,
-      albums: [],
-      media: {
-        items: {},
-        burst_id: {},
-        content_id: {},
-      },
     };
 
     await axios.post("/api/libraries", {
       path: path.filePaths[0],
       library,
     });
-    props.setLibrary(library);
+
+    props.setLibraryPreview(library);
   };
 
-  const pickLibraryComponent = (title: string) => {
+  const createLibraryComponent = (title: string) => {
     return (
       <Modal title={title} onRequestHide={() => setNewLibrary(false)}>
         <div>
@@ -65,13 +60,7 @@ function LibraryPickerImpl(props: Props) {
     );
   };
 
-  const addLibraryButton = (
-    <button className="click-blue" onClick={() => setNewLibrary(true)}>
-      <PlusSVG />
-    </button>
-  );
-
-  const { data: libraries, error } = useSWR<Library[]>(
+  const { data: libraries, error } = useSWR<LibraryPreview[]>(
     "/api/libraries",
     fetcher
   );
@@ -85,18 +74,25 @@ function LibraryPickerImpl(props: Props) {
   }
 
   if (libraries.length === 0) {
-    return pickLibraryComponent("Create your First Library");
+    return createLibraryComponent("Create your First Library");
   }
 
   if (newLibrary) {
-    return pickLibraryComponent("Create a New Library");
+    return createLibraryComponent("Create a New Library");
   }
 
   return (
-    <Modal title="Select a Library" rightButton={addLibraryButton}>
+    <Modal
+      title="Select a Library"
+      rightButton={
+        <button className="click-blue" onClick={() => setNewLibrary(true)}>
+          <PlusSVG />
+        </button>
+      }
+    >
       {libraries.map((library, i) => (
         <li key={i}>
-          <button onClick={() => props.setLibrary(library)}>
+          <button onClick={() => props.setLibraryPreview(library)}>
             {library.name}
           </button>
         </li>

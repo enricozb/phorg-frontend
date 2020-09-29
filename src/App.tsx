@@ -22,8 +22,8 @@ function App(props: Props) {
   }
   return (
     <>
-      <Topbar libraryName={props.library!.name} albumName={props.album?.name}/>
-      <Grid libraryId={props.library.id} media={props.library.media}/>
+      <Topbar library={props.library!} albumName={props.album?.name} />
+      <Grid libraryId={props.library.id} />
     </>
   );
 }

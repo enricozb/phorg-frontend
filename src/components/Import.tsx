@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { connect, ConnectedProps } from "react-redux";
 import axios from "axios";
+import { mutate } from "swr";
 
 import { Modal } from "./modals/Modal";
-import { ImportStatus, State } from "../types";
+import { guid, ImportStatus } from "../types";
 import {
   multiselectPathsDialog,
   onImportStatusUpdate,
@@ -12,15 +12,7 @@ import {
 import { ReactComponent as WarningSVG } from "../img/warning.svg";
 import "../css/Import.css";
 
-const mapState = ({ library }: State) => ({
-  library,
-});
-const mapDispatch = {};
-
-const connector = connect(mapState, mapDispatch);
-type Props = ConnectedProps<typeof connector>;
-
-function ImportButtonImpl(props: Props) {
+export function ImportButton(props: { libraryId: guid }) {
   const [showingErrors, setShowingErrors] = useState(false);
   const [importStatus, setImportStatus] = useState({
     ongoing: false,
@@ -42,15 +34,17 @@ function ImportButtonImpl(props: Props) {
           setTimeout(() => setImportStatus(status), 1000);
 
           await axios.post("/api/media", {
-            libraryId: props.library!.id,
+            libraryId: props.libraryId,
             media: status.media,
           });
+
+          mutate(`/api/libraries/${props.libraryId}`);
         } else {
           setImportStatus(status);
         }
       }
     );
-  }, [props.library]);
+  }, [props.libraryId]);
 
   const hasErrors = importStatus.errors.length > 0;
 
@@ -91,7 +85,7 @@ function ImportButtonImpl(props: Props) {
         const { canceled, filePaths } = await multiselectPathsDialog();
         if (!canceled) {
           await axios.post("/api/import", {
-            libraryId: props.library!.id,
+            libraryId: props.libraryId,
             paths: filePaths,
           });
         }
@@ -101,8 +95,6 @@ function ImportButtonImpl(props: Props) {
     </button>
   );
 }
-
-export const ImportButton = connector(ImportButtonImpl);
 
 interface ErrorModalProps {
   errors: string[];
