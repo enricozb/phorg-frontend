@@ -33,9 +33,13 @@ export function Grid(props: Props) {
     );
   }
 
+  const mediaEntries = Object.entries(
+    library.media.items
+  ).sort(([id1, e1], [id2, e2]) => e1.timestamp.localeCompare(e2.timestamp));
+
   return (
     <div className="grid">
-      {Object.entries(library.media.items).map(([id, mediaEntry], i) => (
+      {mediaEntries.map(([id, mediaEntry], i) => (
         <Thumbnail key={i} libraryId={library.id} mediaId={id} />
       ))}
     </div>
