@@ -20,6 +20,7 @@ function App(props: Props) {
   if (!props.library) {
     return <LibraryPicker></LibraryPicker>;
   }
+
   return (
     <>
       <Topbar library={props.library!} albumName={props.album?.name} />
