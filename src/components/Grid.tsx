@@ -1,14 +1,13 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import useSWR from "swr";
 
+import "../utils/extensions.ts";
 import { useMousetrap } from "../utils/mousetrap";
 import { fetcher } from "../api/requests";
 import { guid, Library } from "../types";
 import { Thumbnail } from "./Thumbnail";
 import "../css/Grid.css";
-
-const Mousetrap = require("mousetrap");
 
 interface Props {
   libraryId: guid;
@@ -17,8 +16,9 @@ interface Props {
 export function Grid(props: Props) {
   const gridRef = useRef<HTMLDivElement>(null);
 
-  const { bindKeys, unbindKeys } = useMousetrap();
+  const bindKeys = useMousetrap();
   const [cursor, setCursor] = useState(0);
+  const [selected, setSelected] = useState<Set<number>>(new Set());
 
   // 160px are the fixed dimensions of thumbnails. Zoom might break this?
   const getNumCols = () =>
@@ -26,15 +26,14 @@ export function Grid(props: Props) {
   const clampCursor = (cursor: number) => Math.max(0, Math.min(30, cursor));
 
   useEffect(() => {
-    bindKeys({
+    return bindKeys({
       h: () => setCursor((c) => clampCursor(c - 1)),
       j: () => setCursor((c) => clampCursor(c + getNumCols())),
       k: () => setCursor((c) => clampCursor(c - getNumCols())),
       l: () => setCursor((c) => clampCursor(c + 1)),
+      m: () => setSelected((selected) => selected.symDiff(new Set([cursor]))),
     });
-
-    return unbindKeys;
-  }, []);
+  }, [cursor, bindKeys]);
 
   const { data: library, error } = useSWR<Library>(
     `/api/libraries/${props.libraryId}`,
@@ -63,7 +62,7 @@ export function Grid(props: Props) {
         <Thumbnail
           key={i}
           cursor={cursor === i}
-          selected={false}
+          selected={selected.has(i)}
           libraryId={library.id}
           mediaId={id}
         />
