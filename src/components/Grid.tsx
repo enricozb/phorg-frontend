@@ -128,7 +128,7 @@ function useKeys(gridRef: React.RefObject<HTMLDivElement>) {
     };
 
     return bindKeys({ ...movementKeyMap, ...selectionKeyMap });
-  }, [anchor, cursor, bindKeys, getNumCols]);
+  }, [anchor, anchorSelection, cursor, moveCursor, bindKeys, getNumCols]);
 
   return { cursor, selected: selected.union(anchorSelection) };
 }
