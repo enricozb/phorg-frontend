@@ -32,8 +32,6 @@ export function Grid(props: Props) {
     );
   }
 
-  console.log(selected.size);
-
   // sort media by timestamp (earliest first)
   const mediaEntries = Object.entries(
     library.media.items
@@ -69,7 +67,8 @@ function useKeys(gridRef: React.RefObject<HTMLDivElement>) {
     () => Math.floor(gridRef.current!.getBoundingClientRect().width / 160),
     [gridRef]
   );
-  const clampCursor = (cursor: number) => Math.max(0, Math.min(30, cursor));
+  const clampCursor = (cursor: number) =>
+    Math.max(0, Math.min(gridRef.current!.childNodes.length - 1, cursor));
 
   const moveCursor: Record<string, (cursor: number) => number> = {
     h: (c) => clampCursor(c - 1),

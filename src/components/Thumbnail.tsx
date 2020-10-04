@@ -1,5 +1,6 @@
 import React from "react";
 
+import { scrollToCenter } from "../utils/scroll";
 import { guid } from "../types";
 import "../css/Thumbnail.css";
 
@@ -13,6 +14,11 @@ interface Props {
 export function Thumbnail(props: Props) {
   return (
     <div
+      ref={(ref) => {
+        if (ref && props.cursor) {
+          scrollToCenter(ref);
+        }
+      }}
       className={`thumbnail ${props.selected ? "selected" : ""} ${
         props.cursor ? "cursor" : ""
       }`}
