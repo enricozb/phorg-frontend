@@ -1,6 +1,7 @@
 :root {
   --border-style: 1px solid #ccc;
   --shadow: 0 5px 10px 0px #777;
+  --dark-shadow: 0 5px 10px 1px #444;
 
   --red: #ec4219;
   --light-red: #ec421922;

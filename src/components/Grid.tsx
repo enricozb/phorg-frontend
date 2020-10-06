@@ -15,7 +15,7 @@ interface Props {
 
 export function Grid(props: Props) {
   const gridRef = useRef<HTMLDivElement>(null);
-  const { cursor, selected } = useKeys(gridRef);
+  const { focused, cursor, selected } = useKeys(gridRef);
   const { data: library, error } = useSWR<Library>(
     `/api/libraries/${props.libraryId}`,
     fetcher
@@ -42,6 +42,7 @@ export function Grid(props: Props) {
       {mediaEntries.map(([id, mediaEntry], i) => (
         <Thumbnail
           key={i}
+          focused={cursor === i && focused}
           cursor={cursor === i}
           selected={selected.has(i)}
           libraryId={library.id}
@@ -54,6 +55,7 @@ export function Grid(props: Props) {
 
 function useKeys(gridRef: React.RefObject<HTMLDivElement>) {
   const [anchor, setAnchor] = useState<number | null>(null);
+  const [focused, setFocused] = useState(false);
   const [cursor, setCursor] = useState(0);
   const [anchorSelection, setAnchorSelection] = useState<Set<number>>(
     new Set()
@@ -114,21 +116,27 @@ function useKeys(gridRef: React.RefObject<HTMLDivElement>) {
       ),
     };
 
-    const selectionKeyMap = {
+    const additionalKeyMap = {
       m: () => {
         flushAnchorSelection();
         setSelected((selected) =>
           selected.union(anchorSelection).symDiff(new Set([cursor]))
         );
       },
+      enter: () => {
+        setFocused(true);
+        setSelected(new Set());
+        clearAnchorSelection();
+      },
       esc: () => {
+        setFocused(false);
         setSelected(new Set());
         clearAnchorSelection();
       },
     };
 
-    return bindKeys({ ...movementKeyMap, ...selectionKeyMap });
+    return bindKeys({ ...movementKeyMap, ...additionalKeyMap });
   }, [anchor, anchorSelection, cursor, moveCursor, bindKeys, getNumCols]);
 
-  return { cursor, selected: selected.union(anchorSelection) };
+  return { focused, cursor, selected: selected.union(anchorSelection) };
 }

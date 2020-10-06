@@ -9,9 +9,11 @@
   display: none;
   justify-content: center;
   align-items: center;
+
+  backdrop-filter: blur(4px) brightness(60%);
 }
 
-.modal {
+.modal:not(.clear) {
   width: fit-content;
   height: fit-content;
 
@@ -33,6 +35,14 @@
   -moz-box-shadow: var(--shadow);
   -webkit-box-shadow: var(--shadow);
   box-shadow: var(--shadow);
+}
+
+.modal.clear {
+  padding: 0;
+
+  -moz-box-shadow: var(--dark-shadow);
+  -webkit-box-shadow: var(--dark-shadow);
+  box-shadow: var(--dark-shadow);
 }
 
 .modal .title {
@@ -74,6 +84,10 @@
   padding: 10px;
 
   overflow-y: overlay;
+}
+
+.modal.clear .content {
+  padding: 0px;
 }
 
 @media(max-width: 600px) {

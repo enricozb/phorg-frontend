@@ -81,6 +81,7 @@ export function ImportButton(props: { libraryId: guid }) {
   return (
     <button
       className="click-blue"
+      tabIndex={-1}
       onClick={async () => {
         const { canceled, filePaths } = await multiselectPathsDialog();
         if (!canceled) {
