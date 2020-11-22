@@ -53,7 +53,7 @@ window.electron = {
     });
 
     server.on("listening", () => {
-      console.log(`Server listening`);
+      console.log(`Server listening to ${socketPath}`);
     });
     server.listen(socketPath);
   },

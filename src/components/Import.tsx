@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
-import { mutate } from "swr";
+import useSWR, { mutate } from "swr";
+import { Button, Text } from "rebass";
 
 import { Modal } from "./modals/Modal";
-import { guid, ImportStatus } from "../types";
+import { guid, ImportStatus, Socket } from "../types";
 import {
   multiselectPathsDialog,
   onImportStatusUpdate,
 } from "../utils/electron";
+import { fetcher } from "../api/requests";
 import { ReactComponent as WarningSVG } from "../img/warning.svg";
 import "../css/Import.css";
 
@@ -23,10 +25,11 @@ export function ImportButton(props: { libraryId: guid }) {
     media: {},
   } as ImportStatus);
 
+  const { data: socket, error } = useSWR<Socket>("/api/connect", fetcher);
+
   useEffect(() => {
-    onImportStatusUpdate(
-      "/tmp/phorg_import.sock",
-      async (status: ImportStatus) => {
+    if (socket) {
+      onImportStatusUpdate(socket.path, async (status: ImportStatus) => {
         if (status.complete) {
           setImportStatus({ ...status, ongoing: true });
 
@@ -42,9 +45,13 @@ export function ImportButton(props: { libraryId: guid }) {
         } else {
           setImportStatus(status);
         }
-      }
-    );
-  }, [props.libraryId]);
+      });
+    }
+  }, [props.libraryId, socket]);
+
+  if (error) {
+    return null;
+  }
 
   const hasErrors = importStatus.errors.length > 0;
 

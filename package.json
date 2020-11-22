@@ -28,8 +28,7 @@
     "swr": "^0.3.9",
     "theme-ui": "^0.3.4",
     "typescript": "^3.9.7",
-    "uuid": "^8.3.1",
-    "uuid4": "^2.0.2"
+    "uuid": "^8.3.1"
   },
   "scripts": {
     "start": "BROWSER=none react-scripts start",

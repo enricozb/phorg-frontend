@@ -4,6 +4,10 @@ export type guid = string;
 export type burst_id = string;
 export type content_id = string;
 
+export interface Socket {
+  path: string;
+}
+
 export interface LibraryMedia {
   items: Record<guid, Media>;
   burst_id: Record<burst_id, guid[]>;
