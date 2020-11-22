@@ -8,7 +8,8 @@ import { LibraryPicker } from "./components/modals/LibraryPicker";
 import { Topbar } from "./components/Topbar";
 import { Grid } from "./components/Grid";
 
-export default () => <ThemeProvider theme={theme}><App/></ThemeProvider>;
+// export default () => <ThemeProvider theme={theme}><App/></ThemeProvider>;
+export default () => <App/>;
 
 function App() {
   const [library, setLibrary] = React.useState<LibraryPreview | null>(null);

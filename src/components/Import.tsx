@@ -104,7 +104,7 @@ interface ErrorModalProps {
 
 function ErrorModal(props: ErrorModalProps) {
   return (
-    <Modal title="Errors" onRequestHide={props.onRequestHide}>
+    <Modal onRequestHide={props.onRequestHide}>
       {props.errors.map((error, i) => (
         <li key={i}>{error}</li>
       ))}

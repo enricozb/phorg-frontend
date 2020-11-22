@@ -38,7 +38,7 @@ export function Thumbnail(props: Props) {
 
 function MediaModal(props: Pick<Props, "libraryId" | "mediaId">) {
   return (
-    <Modal title={null}>
+    <Modal>
       <img
         className="media-preview"
         src={`/api/media/${props.libraryId}/${props.mediaId}`}

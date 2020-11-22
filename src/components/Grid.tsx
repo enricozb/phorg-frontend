@@ -35,11 +35,11 @@ export function Grid(props: Props) {
   // sort media by timestamp (earliest first)
   const mediaEntries = Object.entries(
     library.media.items
-  ).sort(([id1, e1], [id2, e2]) => e1.timestamp.localeCompare(e2.timestamp));
+  ).sort(([, e1], [, e2]) => e1.timestamp.localeCompare(e2.timestamp));
 
   return (
     <div ref={gridRef} className="grid">
-      {mediaEntries.map(([id, mediaEntry], i) => (
+      {mediaEntries.map(([id], i) => (
         <Thumbnail
           key={i}
           focused={cursor === i && focused}

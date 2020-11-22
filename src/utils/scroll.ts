@@ -1,12 +1,11 @@
 import { clamp, sign } from "./math";
 
-const accel = 5;
-const dampening = 50;
-const deltaMin = 5;
+const accel = 3;
+const dampening = 30;
+const deltaMin = 1;
 const vMax = 100;
 
 const state = {
-  container: null as HTMLElement | null,
   velocity: 0,
   destination: 0,
   intervalId: null as number | null,
@@ -17,15 +16,16 @@ function vMul(delta: number) {
 }
 
 function scrollStep() {
-  const position = state.container!.scrollTop;
+  const position = window.scrollY;
   const deltaSign = sign(state.destination - position);
   const delta = Math.abs(state.destination - position);
 
+  console.log("step", position, deltaSign, delta, deltaMin, state.destination);
+
   if (delta < deltaMin) {
-    state.container!.scrollTop = state.destination;
+    window.scrollTo(0, state.destination);
     window.clearInterval(state.intervalId!);
 
-    state.container = null;
     state.velocity = 0;
     state.destination = 0;
     state.intervalId = null;
@@ -33,18 +33,23 @@ function scrollStep() {
     state.velocity =
       clamp(state.velocity + deltaSign * accel, -vMax, vMax) * vMul(delta);
 
-    state.container!.scrollTop += state.velocity;
+    if (Math.abs(state.velocity) < 1) {
+      state.velocity = Math.sign(state.velocity)
+    }
+
+    console.log(state.velocity)
+
+    window.scrollTo(0, window.scrollY + state.velocity);
   }
 }
 
 export function scrollToCenter(element: HTMLElement) {
-  state.container = element.parentElement;
-
   const { height } = element.getBoundingClientRect();
+
   state.destination = clamp(
     element.offsetTop - (window.innerHeight - height) / 2,
     0,
-    state.container!.scrollHeight - state.container!.clientHeight
+    Infinity
   );
 
   // restart animation if it's not running

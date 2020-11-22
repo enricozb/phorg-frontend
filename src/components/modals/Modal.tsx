@@ -1,33 +1,23 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 
 import "../../css/Modal.css";
-import { ReactComponent as TimesSVG } from "../../img/times.svg";
 
 interface Props {
-  title: string | null;
   onRequestHide: (() => void) | null;
-  leftButton: ReactElement | null;
-  rightButton: ReactElement | null;
 }
 
 export class Modal extends React.Component<Props> {
   public static defaultProps = {
     onRequestHide: null,
-    leftButton: null,
-    rightButton: null,
   };
 
-  modalDiv: HTMLDivElement;
+  modalDiv = document.createElement("div");
   modalOverlay = document.getElementById("modal-overlay");
 
   constructor(props: Props) {
     super(props);
-    this.modalDiv = document.createElement("div");
     this.modalDiv.classList.add("modal");
-    if (props.title === null) {
-      this.modalDiv.classList.add("clear");
-    }
     this.modalOverlay!.onclick = this.clickOutside;
   }
 
@@ -54,37 +44,8 @@ export class Modal extends React.Component<Props> {
   };
 
   render = () => {
-    const closeModalButton = (
-      <button className="click-blue" onClick={this.requestHide}>
-        <TimesSVG />
-      </button>
-    );
-
-    const closeButtonVisibile =
-      this.props.onRequestHide === null ? "hidden" : "visible";
-    const rightButton = this.props.rightButton ?? closeModalButton;
-    const rightVisible = this.props.rightButton === null ? "hidden" : "visible";
-
-    if (this.props.title) {
-      return ReactDOM.createPortal(
-        <>
-          <div className="title">
-            <div className="left" style={{ visibility: closeButtonVisibile }}>
-              {closeModalButton}
-            </div>
-            <div>{this.props.title}</div>
-            <div className="right" style={{ visibility: rightVisible }}>
-              {rightButton}
-            </div>
-          </div>
-          <div className="content">{this.props.children}</div>
-        </>,
-        this.modalDiv
-      );
-    }
-
     return ReactDOM.createPortal(
-      <div className="content">{this.props.children}</div>,
+      this.props.children,
       this.modalDiv
     );
   };

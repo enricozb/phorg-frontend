@@ -5,7 +5,7 @@ import useSWR from "swr";
 import { v4 as uuidv4 } from "uuid";
 
 import { LibraryPreview } from "../../types";
-import { Modal } from "./Modal";
+import { CardModal, Modal } from "./";
 import { fetcher } from "../../api/requests";
 import { openPathDialog } from "../../utils/electron";
 import { ReactComponent as PlusSVG } from "../../img/plus.svg";
@@ -39,7 +39,7 @@ export function LibraryPicker(props: Props) {
 
   const createLibraryComponent = (title: string) => {
     return (
-      <Modal title={title} onRequestHide={() => setNewLibrary(false)}>
+      <Modal onRequestHide={() => setNewLibrary(false)}>
         <div>
           <p>Name</p>
           <input
@@ -61,11 +61,11 @@ export function LibraryPicker(props: Props) {
   );
 
   if (error) {
-    return <Modal title="Error Loading Libraries">{error.message}</Modal>;
+    return <Modal>{error.message}</Modal>;
   }
 
   if (!libraries) {
-    return <Modal title="Pick a Library">loading...</Modal>;
+    return <Modal>loading...</Modal>;
   }
 
   if (libraries.length === 0) {
@@ -77,14 +77,7 @@ export function LibraryPicker(props: Props) {
   }
 
   return (
-    <Modal
-      title="Select a Library"
-      rightButton={
-        <button className="click-blue" onClick={() => setNewLibrary(true)}>
-          <PlusSVG />
-        </button>
-      }
-    >
+    <CardModal>
       {libraries.map((library, i) => (
         <li key={i}>
           <button onClick={() => props.setLibrary(library)}>
@@ -92,6 +85,6 @@ export function LibraryPicker(props: Props) {
           </button>
         </li>
       ))}
-    </Modal>
+    </CardModal>
   );
 }

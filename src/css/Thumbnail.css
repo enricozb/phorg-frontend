@@ -7,12 +7,12 @@
 }
 
 .thumbnail.cursor img {
-  border: 3px solid var(--red);
+  border: 3px solid red;
   padding: 2px;
 }
 
 .thumbnail.selected {
-  background: var(--light-blue);
+  background: blue;
 }
 
 .media-preview {
