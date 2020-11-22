@@ -20,8 +20,6 @@ function scrollStep() {
   const deltaSign = sign(state.destination - position);
   const delta = Math.abs(state.destination - position);
 
-  console.log("step", position, deltaSign, delta, deltaMin, state.destination);
-
   if (delta < deltaMin) {
     window.scrollTo(0, state.destination);
     window.clearInterval(state.intervalId!);
@@ -36,8 +34,6 @@ function scrollStep() {
     if (Math.abs(state.velocity) < 1) {
       state.velocity = Math.sign(state.velocity)
     }
-
-    console.log(state.velocity)
 
     window.scrollTo(0, window.scrollY + state.velocity);
   }
