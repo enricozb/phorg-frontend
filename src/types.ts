@@ -39,19 +39,3 @@ export interface ImportStatus {
   errors: string[];
   media: Record<string, Media>;
 }
-
-// redux
-
-export interface State {
-  library: Library | null;
-  album: Album | null;
-}
-
-export const SET_LIBRARY_PREVIEW = "SET_LIBRARY_PREVIEW";
-
-interface SetLibraryPreviewAction {
-  type: typeof SET_LIBRARY_PREVIEW;
-  library: LibraryPreview;
-}
-
-export type Action = SetLibraryPreviewAction;

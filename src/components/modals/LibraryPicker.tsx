@@ -1,25 +1,20 @@
 import React, { useState, ChangeEvent } from "react";
 
 import axios from "axios";
-import { connect, ConnectedProps } from "react-redux";
 import useSWR from "swr";
 import { v4 as uuidv4 } from "uuid";
 
 import { LibraryPreview } from "../../types";
-import { setLibraryPreview } from "../../redux/actions";
 import { Modal } from "./Modal";
 import { fetcher } from "../../api/requests";
 import { openPathDialog } from "../../utils/electron";
 import { ReactComponent as PlusSVG } from "../../img/plus.svg";
 
-const mapDispatch = {
-  setLibraryPreview,
+type Props = {
+  setLibrary: (library: LibraryPreview) => void;
 };
 
-const connector = connect(null, mapDispatch);
-type Props = ConnectedProps<typeof connector>;
-
-function LibraryPickerImpl(props: Props) {
+export function LibraryPicker(props: Props) {
   const [name, setName] = useState("");
   const [newLibrary, setNewLibrary] = useState(false);
 
@@ -39,7 +34,7 @@ function LibraryPickerImpl(props: Props) {
       library,
     });
 
-    props.setLibraryPreview(library);
+    props.setLibrary(library);
   };
 
   const createLibraryComponent = (title: string) => {
@@ -92,7 +87,7 @@ function LibraryPickerImpl(props: Props) {
     >
       {libraries.map((library, i) => (
         <li key={i}>
-          <button onClick={() => props.setLibraryPreview(library)}>
+          <button onClick={() => props.setLibrary(library)}>
             {library.name}
           </button>
         </li>
@@ -100,5 +95,3 @@ function LibraryPickerImpl(props: Props) {
     </Modal>
   );
 }
-
-export const LibraryPicker = connector(LibraryPickerImpl);
