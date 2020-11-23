@@ -4,11 +4,12 @@ import axios from "axios";
 import useSWR from "swr";
 import { v4 as uuidv4 } from "uuid";
 
+import { List, ListItem } from "@material-ui/core";
+
 import { LibraryPreview } from "../../types";
-import { CardModal, Modal } from "./";
+import { TitleModal, Modal } from "./";
 import { fetcher } from "../../api/requests";
 import { openPathDialog } from "../../utils/electron";
-import { ReactComponent as PlusSVG } from "../../img/plus.svg";
 
 type Props = {
   setLibrary: (library: LibraryPreview) => void;
@@ -77,14 +78,14 @@ export function LibraryPicker(props: Props) {
   }
 
   return (
-    <CardModal>
-      {libraries.map((library, i) => (
-        <li key={i}>
-          <button onClick={() => props.setLibrary(library)}>
+    <TitleModal title="Select a Library">
+      <List component="nav">
+        {libraries.map((library, i) => (
+          <ListItem button onClick={() => props.setLibrary(library)} key={i}>
             {library.name}
-          </button>
-        </li>
-      ))}
-    </CardModal>
+          </ListItem>
+        ))}
+      </List>
+    </TitleModal>
   );
 }

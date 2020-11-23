@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import useSWR, { mutate } from "swr";
-import { Button, Text } from "rebass";
 
 import { Modal } from "./modals/Modal";
 import { guid, ImportStatus, Socket } from "../types";
