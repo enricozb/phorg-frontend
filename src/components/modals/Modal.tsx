@@ -3,19 +3,15 @@ import ReactDOM from "react-dom";
 
 import "../../css/Modal.css";
 
-interface Props {
-  onRequestHide: (() => void) | null;
+export interface ModalProps {
+  onRequestHide?: (() => void);
 }
 
-export class Modal extends React.Component<Props> {
-  public static defaultProps = {
-    onRequestHide: null,
-  };
-
+export class Modal extends React.Component<ModalProps> {
   modalDiv = document.createElement("div");
   modalOverlay = document.getElementById("modal-overlay");
 
-  constructor(props: Props) {
+  constructor(props: ModalProps) {
     super(props);
     this.modalDiv.classList.add("modal");
     this.modalOverlay!.onclick = this.clickOutside;
@@ -38,9 +34,7 @@ export class Modal extends React.Component<Props> {
   };
 
   requestHide = () => {
-    if (this.props.onRequestHide) {
-      this.props.onRequestHide();
-    }
+    this.props.onRequestHide?.();
   };
 
   render = () => {

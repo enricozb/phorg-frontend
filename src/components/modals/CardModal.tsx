@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from "react";
 
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
 
-import { Modal } from "./Modal";
+import { Modal, ModalProps } from "./Modal";
 
-export const CardModal: FunctionComponent<{}> = ({ children }) => (
-  <Modal>
+export const CardModal: FunctionComponent<ModalProps> = ({ children, onRequestHide }) => (
+  <Modal onRequestHide={onRequestHide}>
     <Card>
       <CardContent>
         {children}

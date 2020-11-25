@@ -1,8 +1,29 @@
 import React from "react";
 
+import {
+  AppBar,
+  Breadcrumbs,
+  IconButton,
+  Toolbar,
+  Typography,
+} from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import MenuIcon from "@material-ui/icons/Menu";
+
 import { LibraryPreview } from "../types";
 import { ImportButton } from "./Import";
-import "../css/Topbar.css";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flex: 1,
+      color: "white",
+    },
+  })
+);
 
 interface Props {
   library: LibraryPreview;
@@ -10,12 +31,20 @@ interface Props {
 }
 
 export function Topbar(props: Props) {
-  const topbarText = `${props.library.name} - ${props.albumName ?? "All Media"}`;
+  const classes = useStyles();
 
   return (
-    <div className="topbar">
-      <div className="title">{topbarText}</div>
-      <ImportButton libraryId={props.library.id} />
-    </div>
+    <AppBar position="sticky" color="default">
+      <Toolbar>
+        <IconButton edge="start" className={classes.menuButton} color="inherit">
+          <MenuIcon />
+        </IconButton>
+        <Breadcrumbs className={classes.title}>
+          <Typography variant="subtitle1">{props.library.name}</Typography>
+          <Typography variant="subtitle1">{props.albumName}</Typography>
+        </Breadcrumbs>
+        <ImportButton libraryId={props.library.id} />
+      </Toolbar>
+    </AppBar>
   );
 }
