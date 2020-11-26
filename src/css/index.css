@@ -11,8 +11,40 @@ html {
 body {
   height: 100%;
   margin: 0;
+  overflow: overlay;
+
+  /* for scrollbar transition */
+  color: rgba(0, 0, 0, 0);
+  transition: color .3s ease;
+}
+
+body.scrolling {
+  color: rgba(0, 0, 0, 0.5);
 }
 
 button {
   cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 14px;
+}
+
+/* apple-like scrollbar */
+::-webkit-scrollbar-track {
+  border: solid 4px transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 14px 14px;
+  border: solid 4px transparent;
+  border-radius: 14px;
+}
+
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 14px 14px;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
 }
